@@ -36,8 +36,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     
-    public func configure (with model : String) {
-        guard let url = URL(string : "https://image.tmdb.org/t/p/w500/\(model)") else {return}
+    public func configure (with path : String) {
+        guard let url = URL(string : "https://image.tmdb.org/t/p/w500/\(path)") else {return}
         
         self.posterImageView.sd_setImage(with: url, completed: nil)
         
