@@ -39,7 +39,9 @@ class HomeViewController: UIViewController {
         configureNavBar()
         
         
-        
+        APICaller.shared.getYoutubeMovie(query: "harry") { (result) in
+                
+        }
     }
     
     override func viewDidLayoutSubviews() {
