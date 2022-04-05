@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     
     //MARK:- Vars
     
-    let sectionTitles : [String] = ["Trending Movies", "Popular" ,"Trending TV" , "Upcomming Movies", "Top Rated"]
+    let sectionTitles : [String] = ["Trending Movies", "Trending TV", "Popular"  , "Upcomming Movies", "Top Rated"]
     
     private let tableView : UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -36,6 +36,9 @@ class HomeViewController: UIViewController {
         
         configureNavBar()
         
+        getTrendingMovies ()
+        
+   
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,8 +50,7 @@ class HomeViewController: UIViewController {
     
     //MARK:- Configure Navigation Controller Function
     func configureNavBar()  {
-       
-       
+   
         let containerView = UIControl(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
          //  containerView.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
            let image = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
@@ -69,7 +71,24 @@ class HomeViewController: UIViewController {
     }
     
     
+    //MARK:- Get Trending Movies Data
+    func getTrendingMovies (){
+//        APICaller.shared.getTrendingMovies { (results) in
+//            switch results {
+//            case .success(let movies) :
+//                print(movies)
+//            case .failure(let error) :
+//                print(error)
+//            }
+//        }
+//    }
     
+        APICaller.shared.getTopRated { (result) in
+            print(result)
+        }
+        
+    
+}
 }
 
 //MARK:- HomeViewController Extension for TableView
@@ -112,7 +131,7 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
         header.textLabel?.textColor = .white
         header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
-        header.textLabel?.text = header.textLabel?.text?.lowercased()
+        header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
         
     }
     
