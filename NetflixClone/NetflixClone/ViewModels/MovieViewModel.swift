@@ -9,6 +9,8 @@ import Foundation
 
 class MovieViewModel {
     
+    
+    
     func getTrendingMovie(completion: @escaping ([Movie])->Void){
         APICaller.shared.getTrendingMovies { (MoviesResult) in
            
