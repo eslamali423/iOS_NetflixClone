@@ -19,6 +19,8 @@ class HomeViewController: UIViewController {
         return table
     }()
     
+    var viewModel = MovieViewModel()
+    
     
     //MARK:- Life Cycle
     override func viewDidLoad() {
@@ -36,9 +38,8 @@ class HomeViewController: UIViewController {
         
         configureNavBar()
         
-        getTrendingMovies ()
         
-   
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,45 +51,28 @@ class HomeViewController: UIViewController {
     
     //MARK:- Configure Navigation Controller Function
     func configureNavBar()  {
-   
+        
         let containerView = UIControl(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
-         //  containerView.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
-           let image = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
-           image.image = UIImage(named: "netflixLogo")
-           containerView.addSubview(image)
-           let netflixLogo = UIBarButtonItem(customView: containerView)
-           netflixLogo.width = 20
-           navigationItem.leftBarButtonItem = netflixLogo
-    
-
+        //  containerView.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
+        let image = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        image.image = UIImage(named: "netflixLogo")
+        containerView.addSubview(image)
+        let netflixLogo = UIBarButtonItem(customView: containerView)
+        netflixLogo.width = 20
+        navigationItem.leftBarButtonItem = netflixLogo
+        
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
             UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
         ]
-    
+        
         
         navigationController?.navigationBar.tintColor = .systemPink 
     }
     
     
-    //MARK:- Get Trending Movies Data
-    func getTrendingMovies (){
-//        APICaller.shared.getTrendingMovies { (results) in
-//            switch results {
-//            case .success(let movies) :
-//                print(movies)
-//            case .failure(let error) :
-//                print(error)
-//            }
-//        }
-//    }
     
-        APICaller.shared.getTopRated { (result) in
-            print(result)
-        }
-        
-    
-}
 }
 
 //MARK:- HomeViewController Extension for TableView
@@ -106,6 +90,35 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
         guard let cell =  tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else {
             return UITableViewCell()
         }
+        
+        
+                switch indexPath.section {
+                case Sections.TrendingMovies.rawValue:
+                    viewModel.getTrendingMovie { (movies) in
+                        cell.configure(with: movies)
+                    }
+                    
+                case Sections.TrendingTv.rawValue:
+                    viewModel.getTrendingTv { (movies) in
+                        cell.configure(with: movies)
+                    }
+                    
+                case Sections.Popular.rawValue:
+                    viewModel.getpopularMovie { (movies) in
+                        cell.configure(with: movies)
+                    }
+                case Sections.Upcomming.rawValue:
+                    viewModel.getUpcommingMovie { (movies) in
+                        cell.configure(with: movies)
+                    }
+                case Sections.TopRated.rawValue:
+                    viewModel.getTopRatedgMovie { (movies) in
+                        cell.configure(with: movies)
+                    }
+        
+                default:
+                    return UITableViewCell()
+                }
         
         return cell
     }
@@ -129,7 +142,7 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
         guard let header = view as? UITableViewHeaderFooterView else  {return}
         
         header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-        header.textLabel?.textColor = .white
+        header.textLabel?.textColor = .label
         header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
         header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
         
@@ -137,7 +150,7 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
     
     // this function to hide navigationBar when scrolling down
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-     
+        
         let defualtOffset = view.safeAreaInsets.top
         let offset = scrollView.contentOffset.y + defualtOffset
         
@@ -148,3 +161,12 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
     
 }
 
+enum Sections : Int {
+    case TrendingMovies = 0
+    case TrendingTv = 1
+    case Popular = 2
+    case Upcomming = 3
+    case TopRated = 4
+    
+    
+}

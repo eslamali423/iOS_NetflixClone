@@ -24,6 +24,7 @@
 		28CBF09A27FC851600CD9CA3 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF09927FC851600CD9CA3 /* MovieCollectionViewCell.swift */; };
 		28CBF09E27FC867400CD9CA3 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 28CBF09D27FC867400CD9CA3 /* SDWebImage */; };
 		28CBF0A027FC867400CD9CA3 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 28CBF09F27FC867400CD9CA3 /* SDWebImageMapKit */; };
+		28CBF0A327FC8B2800CD9CA3 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF0A227FC8B2800CD9CA3 /* MovieViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		28CBF08F27FC782F00CD9CA3 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		28CBF09227FC7DBA00CD9CA3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		28CBF09927FC851600CD9CA3 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		28CBF0A227FC8B2800CD9CA3 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 		2816FC7C27FBBD3E002E3380 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				28CBF0A227FC8B2800CD9CA3 /* MovieViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				2816FC5A27FBB42A002E3380 /* MainTabBarViewController.swift in Sources */,
 				2816FC8127FBBDCC002E3380 /* CollectionViewTableViewCell.swift in Sources */,
 				28C4C37827FBE5D8001C8D7E /* APICaller.swift in Sources */,
+				28CBF0A327FC8B2800CD9CA3 /* MovieViewModel.swift in Sources */,
 				2816FC8527FBC43A002E3380 /* HeroHeaderUIView.swift in Sources */,
 				2816FC7927FBB6F4002E3380 /* DownloadsViewController.swift in Sources */,
 				2816FC5627FBB42A002E3380 /* AppDelegate.swift in Sources */,
