@@ -43,7 +43,7 @@ class HeroHeaderUIView: UIView {
     private let rateLabel : UILabel = {
         let label =  UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .label
+        label.textColor = .white
         label.font = .systemFont(ofSize: 18, weight: .bold)
     
         
