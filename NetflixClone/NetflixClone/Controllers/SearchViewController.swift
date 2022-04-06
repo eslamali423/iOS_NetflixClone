@@ -89,9 +89,21 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         return 140
         
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let movie = viewModel.discoverdMovies[indexPath.row]
+        DispatchQueue.main.async { [weak self]  in
+            let movieVC = MoviePreviewViewController()
+            movieVC.configure(model: movie)
+            self?.navigationController?.pushViewController(movieVC, animated: true)
+        }
+       
+        
+    }
   
 }
-
+//MARK:- Extension for Updateting Search Result Controller
 extension SearchViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
@@ -106,6 +118,7 @@ extension SearchViewController : UISearchResultsUpdating {
         viewModel.search(query: query) { (isSuccess) in
             if isSuccess {
                 DispatchQueue.main.async {
+                    resultController.delegate = self
                     resultController.movies = self.viewModel.searchedMovies
                     resultController.collectionView.reloadData()
                 }
@@ -116,5 +129,17 @@ extension SearchViewController : UISearchResultsUpdating {
     
 }
 
+//MARK:- Extension For Search Result Controll Delegate
+extension SearchViewController : SearchResultViewControllerDelegate {
+    func searchResultViewController(movie: Movie) {
+        DispatchQueue.main.async { [weak self] in
+            
+            let movieVC = MoviePreviewViewController()
+            movieVC.configure(model: movie)
+            self?.navigationController?.pushViewController(movieVC, animated: true)
+            
+        }
+    }
+}
 
 

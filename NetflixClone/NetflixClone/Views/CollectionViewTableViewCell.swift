@@ -80,17 +80,37 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
     }
-    
+    // Did tap On Item
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
         let movie = movies[indexPath.row]
         
         self.delegate?.collectionViewTableViewCell(cell: self, model: movie)
-      
-        
 
     }
+    // This Function Called if w Long Press on item
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration (identifier: nil, previewProvider: nil) { _ in
+            let downloadAction = UIAction(title: "Download", image: UIImage(systemName: "arrow.down.to.line"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+                print("download tapped")
+            }
+            let saveAction = UIAction(title: "Save", image: UIImage(systemName: "bell"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+                print("save tapped")
+            }
+            
+            let addListAction = UIAction(title: "Add to My List", image: UIImage(systemName: "plus"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
+                print("add to list tapped")
+            }
+            
+            
+            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [addListAction,saveAction,downloadAction])
+        }
+  
+    return config
+    }
+    
     
     
 }

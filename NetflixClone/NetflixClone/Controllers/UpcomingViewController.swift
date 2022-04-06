@@ -80,6 +80,17 @@ extension UpcomingViewController : UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let movie = viewModel.upcommingMovies[indexPath.row]
+        DispatchQueue.main.async { [weak self]  in
+            let movieVC = MoviePreviewViewController()
+            movieVC.configure(model: movie)
+            self?.navigationController?.pushViewController(movieVC, animated: true)
+        }
+       
+        
+    }
     
     
     

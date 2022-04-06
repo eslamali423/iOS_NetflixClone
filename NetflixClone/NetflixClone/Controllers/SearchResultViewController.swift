@@ -7,9 +7,17 @@
 
 import UIKit
 
+protocol SearchResultViewControllerDelegate {
+    func searchResultViewController(movie : Movie)
+}
+
 class SearchResultViewController: UIViewController {
+    
+    
 
     //MARK:- Vars
+    
+    public  var delegate : SearchResultViewControllerDelegate?
     
     public  let collectionView : UICollectionView = {
          let layout = UICollectionViewFlowLayout()
@@ -51,11 +59,19 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         else {
             return UICollectionViewCell()
         }
+        
         cell.configure(with: movies[indexPath.row].poster_path ?? "")
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+      
+        let movie = movies[indexPath.row]
+        delegate?.searchResultViewController(movie: movie)
     }
     
 }
