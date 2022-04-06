@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol CollectionViewTableViewCellDelegate {
     func collectionViewTableViewCell(cell : CollectionViewTableViewCell, model : Movie)
@@ -21,8 +22,9 @@ class CollectionViewTableViewCell: UITableViewCell {
      var delegate : CollectionViewTableViewCellDelegate?
     
     private var movies : [Movie] = []
-    var viewModel = YoutubeResponseViewModel()
-    
+
+    var coreDataViewModel = CoreDataViewModel()
+  
     private let collectionView : UICollectionView = {
         // Layout
         let layout = UICollectionViewFlowLayout()
@@ -54,12 +56,22 @@ class CollectionViewTableViewCell: UITableViewCell {
         
         collectionView.frame = contentView.bounds
     }
-    
+    //MARK:- Cofigure teh cell in collectionView
     public func configure (with movies : [Movie]){
         self.movies = movies
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
+    }
+    
+    //MARK:- Download Movie
+    func downloadMovie(indexPath : IndexPath) {
+        let movie = movies[indexPath.row]
+       
+        coreDataViewModel.downloadMovie(movie: movie) { (isSuccess) in
+            NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+        }
+        
     }
     
 }
@@ -93,8 +105,8 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
     // This Function Called if w Long Press on item
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration (identifier: nil, previewProvider: nil) { _ in
-            let downloadAction = UIAction(title: "Download", image: UIImage(systemName: "arrow.down.to.line"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
-                print("download tapped")
+            let downloadAction = UIAction(title: "Download", image: UIImage(systemName: "arrow.down.to.line"), identifier: nil, discoverabilityTitle: nil, state: .off) { [weak self] _ in
+                self?.downloadMovie(indexPath: indexPath)
             }
             let saveAction = UIAction(title: "Save", image: UIImage(systemName: "bell"), identifier: nil, discoverabilityTitle: nil, state: .off) { (_) in
                 print("save tapped")

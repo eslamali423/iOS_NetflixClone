@@ -93,4 +93,12 @@ class MovieTableViewCell: UITableViewCell {
         titleLabel.text = model.original_title ?? model.original_title ?? "Unknown"
     
     }
+    
+    func configure (model : MovieItem) {
+        guard let url = URL(string : "https://image.tmdb.org/t/p/w500/\(model.poster_path ?? "")") else {return}
+
+        moviePosterImage.sd_setImage(with: url, completed: nil)
+        titleLabel.text = model.original_title ?? model.original_title ?? "Unknown"
+    
+    }
 }
