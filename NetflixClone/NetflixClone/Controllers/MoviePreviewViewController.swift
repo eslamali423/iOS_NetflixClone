@@ -12,8 +12,11 @@ class MoviePreviewViewController: UIViewController {
     
     //MARK:- Vars
     
-    var viewModel = YoutubeResponseViewModel()
-    
+    var youtubeViewModel = YoutubeResponseViewModel()
+    var coreDataViewModel = CoreDataViewModel()
+    var currentMovie : Movie?
+   
+
     private let webView : WKWebView = {
         let wetView = WKWebView()
         wetView.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +36,7 @@ class MoviePreviewViewController: UIViewController {
     
     private let starImage : UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: "star.fill",withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))
+        let image = UIImage(systemName: "star.fill",withConfiguration: UIImage.SymbolConfiguration(pointSize: 15))
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(image, for: .normal)
         
@@ -73,7 +76,7 @@ class MoviePreviewViewController: UIViewController {
         return label
     }()
     
-    private let downloadButton : UIButton = {
+    public let downloadButton : UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Download", for: .normal)
@@ -100,6 +103,18 @@ class MoviePreviewViewController: UIViewController {
         
         applyConstraints()
         
+        downloadButton.addTarget(self, action: #selector(didTapDownloadButton), for: .touchUpInside)
+        
+    }
+    
+    @objc func didTapDownloadButton () {
+        guard let movie = currentMovie  else {
+            return
+        }
+        coreDataViewModel.downloadMovie(movie: movie) { (isSuccess) in
+            NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+        }
+        
     }
     
     
@@ -125,7 +140,7 @@ class MoviePreviewViewController: UIViewController {
             starImage.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -20),
             
             rateLabel.centerYAnchor.constraint(equalTo: starImage.centerYAnchor),
-            rateLabel.trailingAnchor.constraint(equalTo: starImage.leadingAnchor,constant: -6),
+            rateLabel.trailingAnchor.constraint(equalTo: starImage.leadingAnchor,constant: -4),
             
             overviewLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor,constant: 5),
             overviewLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 15),
@@ -141,6 +156,7 @@ class MoviePreviewViewController: UIViewController {
     
     //MARK:- Configure With Model
     func configure (model :Movie) {
+        self.currentMovie = model
         titleLabel.text = model.original_name ?? model.original_title ?? "Unkonwn"
         overviewLabel.text = model.overview
         rateLabel.text = "\(model.vote_average)"
@@ -149,7 +165,7 @@ class MoviePreviewViewController: UIViewController {
         
         guard let movieName = model.original_name ?? model.original_title else {return}
         
-        viewModel.getMovie(query: movieName + " trailer") { (videoElement) in
+        youtubeViewModel.getMovie(query: movieName + " trailer") { (videoElement) in
             print (videoElement.id)
             guard let url = URL(string: "https://www.youtube.com/embed/\(videoElement.id.videoId!)") else {
                 print("cant get the video form urllllll")
@@ -159,10 +175,30 @@ class MoviePreviewViewController: UIViewController {
 
             }
         }
+  
+    }
+    //this function for Download View Controller
+    func configure (model :MovieItem) {
+       
+        titleLabel.text = model.original_name ?? model.original_title ?? "Unkonwn"
+        overviewLabel.text = model.overview
+        rateLabel.text = "\(model.vote_average)"
+        let date =  model.release_date ?? "Unknown"
+        dateLabel.text = "Released in : \(date)"
         
+        guard let movieName = model.original_name ?? model.original_title else {return}
         
-        
-        
+        youtubeViewModel.getMovie(query: movieName + " trailer") { (videoElement) in
+            print (videoElement.id)
+            guard let url = URL(string: "https://www.youtube.com/embed/\(videoElement.id.videoId!)") else {
+                print("cant get the video form urllllll")
+                return}
+            DispatchQueue.main.async {
+                self.webView.load(URLRequest(url: url))
+
+            }
+        }
+  
     }
     
     

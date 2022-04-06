@@ -98,10 +98,7 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
             movieVC.configure(model: movie)
             self?.navigationController?.pushViewController(movieVC, animated: true)
         }
-       
-        
     }
-  
 }
 //MARK:- Extension for Updateting Search Result Controller
 extension SearchViewController : UISearchResultsUpdating {
