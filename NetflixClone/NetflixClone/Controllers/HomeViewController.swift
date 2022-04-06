@@ -11,6 +11,9 @@ class HomeViewController: UIViewController {
     
     //MARK:- Vars
     
+    var headerView : HeroHeaderUIView?
+    var headerTrindingRandomMovie : Movie?
+    
     let sectionTitles : [String] = ["Trending Movies", "Trending TV", "Popular"  , "Upcomming Movies", "Top Rated"]
     
     private let tableView : UITableView = {
@@ -33,20 +36,38 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         
         // set the header of the table view
-        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height / 2))
-        tableView.tableHeaderView = headerView
+        configureHeroHeaderView()
         
         configureNavBar()
         
+       // navigationController?.pushViewController(MoviePreviewViewController(), animated: true)
         
-        APICaller.shared.getYoutubeMovie(query: "harry") { (result) in
-                
-        }
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+        
+    }
+    
+    //MARK:- Header View With a random Movie
+    func configureHeroHeaderView()  {
+        headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height / 2))
+        tableView.tableHeaderView = headerView
+        
+        viewModel.getTrendingMovie { (movies) in
+            guard let movie = movies.randomElement() else {
+                print("DDDDNNNNT GEET THEE MOOVEEE")
+                return}
+            self.headerView?.configure(movie: movie)
+            print("MOOOVIIEEE NAAME :::: \(movie.original_title!)")
+        }
+        
+    
+        
+       
+        
         
     }
     
@@ -93,11 +114,12 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        
+        cell.delegate = self
                 switch indexPath.section {
                 case Sections.TrendingMovies.rawValue:
                     viewModel.getTrendingMovie { (movies) in
                         cell.configure(with: movies)
+                        self.headerTrindingRandomMovie = movies.randomElement()
                     }
                     
                 case Sections.TrendingTv.rawValue:
@@ -161,6 +183,8 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    
+    
 }
 
 enum Sections : Int {
@@ -169,6 +193,23 @@ enum Sections : Int {
     case Popular = 2
     case Upcomming = 3
     case TopRated = 4
+    
+    
+}
+
+extension HomeViewController : CollectionViewTableViewCellDelegate {
+    func collectionViewTableViewCell(cell: CollectionViewTableViewCell, model: Movie) {
+        
+        DispatchQueue.main.async { [weak self ] in
+            
+            let movieVC = MoviePreviewViewController()
+            movieVC.configure(model: model)
+            self?.navigationController?.pushViewController(movieVC, animated: true)
+        }
+        
+    }
+    
+    
     
     
 }

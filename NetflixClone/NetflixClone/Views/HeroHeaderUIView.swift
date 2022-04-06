@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HeroHeaderUIView: UIView {
 
@@ -15,7 +16,7 @@ class HeroHeaderUIView: UIView {
        let imageview = UIImageView()
         imageview.contentMode =  .scaleToFill
         imageview.clipsToBounds = true
-        imageview.image = UIImage(named: "movieImage")
+        //imageview.image = UIImage(named: "movieImage")
         return imageview
     }()
     
@@ -84,8 +85,19 @@ class HeroHeaderUIView: UIView {
             
             
         ])
-        
-       
+    }
+    
+    //MARK:- Configure Random Movie
+    func configure(movie : Movie) {
+        DispatchQueue.main.async { [weak self] in
+            let path = movie.poster_path ?? ""
+            guard let url = URL(string : "https://image.tmdb.org/t/p/w500/\(path)") else {
+                print("CAANTTT GEET THE POSTER URLL")
+                return}
+            
+            self?.heroImageView.sd_setImage(with: url, completed: nil)
+        }
+      
     }
     
 }
