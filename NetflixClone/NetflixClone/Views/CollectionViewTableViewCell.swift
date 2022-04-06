@@ -7,11 +7,18 @@
 
 import UIKit
 
+protocol CollectionViewTableViewCellDelegate {
+    func collectionViewTableViewCell(cell : CollectionViewTableViewCell, model : Movie)
+}
+
+
 class CollectionViewTableViewCell: UITableViewCell {
     
     //MARK:- Vars
     
     static let identifier = "CollectionViewTableViewCell"
+    
+     var delegate : CollectionViewTableViewCellDelegate?
     
     private var movies : [Movie] = []
     var viewModel = YoutubeResponseViewModel()
@@ -77,13 +84,13 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        let movie = movies[indexPath.row ]
+        let movie = movies[indexPath.row]
         
-        guard let movieName = movie.original_name ?? movie.original_title else {return}
+        self.delegate?.collectionViewTableViewCell(cell: self, model: movie)
+      
         
-        viewModel.getMovie(query: movieName + " trailer") { (videoElement) in
-            print (videoElement.id)
-        }
+
     }
+    
     
 }
