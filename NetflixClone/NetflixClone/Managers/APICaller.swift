@@ -209,10 +209,11 @@ class APICaller {
             
             do {
                 let result = try JSONDecoder().decode(YoutubeResponse.self, from: data)
-                print(result)
+                completion(.success(result.items[0]))
             }catch {
-                print("EEEERRRRORRROROORORO")
+                
                 print(error.localizedDescription)
+                completion(.failure(error))
             }
         }
         task.resume()

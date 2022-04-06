@@ -14,6 +14,7 @@ class CollectionViewTableViewCell: UITableViewCell {
     static let identifier = "CollectionViewTableViewCell"
     
     private var movies : [Movie] = []
+    var viewModel = YoutubeResponseViewModel()
     
     private let collectionView : UICollectionView = {
         // Layout
@@ -71,6 +72,18 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let movie = movies[indexPath.row ]
+        
+        guard let movieName = movie.original_name ?? movie.original_title else {return}
+        
+        viewModel.getMovie(query: movieName + " trailer") { (videoElement) in
+            print (videoElement.id)
+        }
     }
     
 }

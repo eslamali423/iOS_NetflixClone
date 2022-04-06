@@ -18,6 +18,8 @@
 		2816FC7927FBB6F4002E3380 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816FC7827FBB6F4002E3380 /* DownloadsViewController.swift */; };
 		2816FC8127FBBDCC002E3380 /* CollectionViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816FC8027FBBDCC002E3380 /* CollectionViewTableViewCell.swift */; };
 		2816FC8527FBC43A002E3380 /* HeroHeaderUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816FC8427FBC43A002E3380 /* HeroHeaderUIView.swift */; };
+		2818C0E827FD07F8006C4911 /* YoutubeResponseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2818C0E727FD07F8006C4911 /* YoutubeResponseViewModel.swift */; };
+		2818C0EB27FD09FA006C4911 /* MoviePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2818C0EA27FD09FA006C4911 /* MoviePreviewViewController.swift */; };
 		284C291527FCC11D00CBB288 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284C291427FCC11D00CBB288 /* SearchViewModel.swift */; };
 		284C291827FCC38200CBB288 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284C291727FCC38200CBB288 /* SearchResultViewController.swift */; };
 		284C291B27FCE91E00CBB288 /* YoutubeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284C291A27FCE91E00CBB288 /* YoutubeResponse.swift */; };
@@ -46,6 +48,8 @@
 		2816FC7827FBB6F4002E3380 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		2816FC8027FBBDCC002E3380 /* CollectionViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCell.swift; sourceTree = "<group>"; };
 		2816FC8427FBC43A002E3380 /* HeroHeaderUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderUIView.swift; sourceTree = "<group>"; };
+		2818C0E727FD07F8006C4911 /* YoutubeResponseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeResponseViewModel.swift; sourceTree = "<group>"; };
+		2818C0EA27FD09FA006C4911 /* MoviePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePreviewViewController.swift; sourceTree = "<group>"; };
 		284C291427FCC11D00CBB288 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		284C291727FCC38200CBB288 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		284C291A27FCE91E00CBB288 /* YoutubeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeResponse.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 				2816FC7827FBB6F4002E3380 /* DownloadsViewController.swift */,
 				2816FC5927FBB42A002E3380 /* MainTabBarViewController.swift */,
 				284C291727FCC38200CBB288 /* SearchResultViewController.swift */,
+				2818C0EA27FD09FA006C4911 /* MoviePreviewViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 				28CBF0A227FC8B2800CD9CA3 /* MovieViewModel.swift */,
 				28CBF0A827FCA0C200CD9CA3 /* UpcommingViewModel.swift */,
 				284C291427FCC11D00CBB288 /* SearchViewModel.swift */,
+				2818C0E727FD07F8006C4911 /* YoutubeResponseViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -248,7 +254,9 @@
 				28CBF0A627FC9D7100CD9CA3 /* MovieTableViewCell.swift in Sources */,
 				28CBF0A327FC8B2800CD9CA3 /* MovieViewModel.swift in Sources */,
 				2816FC8527FBC43A002E3380 /* HeroHeaderUIView.swift in Sources */,
+				2818C0EB27FD09FA006C4911 /* MoviePreviewViewController.swift in Sources */,
 				2816FC7927FBB6F4002E3380 /* DownloadsViewController.swift in Sources */,
+				2818C0E827FD07F8006C4911 /* YoutubeResponseViewModel.swift in Sources */,
 				2816FC5627FBB42A002E3380 /* AppDelegate.swift in Sources */,
 				284C291B27FCE91E00CBB288 /* YoutubeResponse.swift in Sources */,
 				284C291827FCC38200CBB288 /* SearchResultViewController.swift in Sources */,
